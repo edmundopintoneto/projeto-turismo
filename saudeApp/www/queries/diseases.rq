@@ -1,5 +1,9 @@
 PREFIX dbpediaO: <http://dbpedia.org/ontology/>
 
-select distinct ?Entity where {
+select distinct ?Entity ?descricao where {
     ?Entity a dbo:Disease.
+	?Entity dbo:abstract ?descricao.
+	FILTER (lang(?descricao) = 'pt')
+        FILTER (?descricao like '%febre%') 
+	
 } LIMIT 100
