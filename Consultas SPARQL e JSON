@@ -1,0 +1,72 @@
+1) Consulta de alguns Campeonatos
+
+1.1) SPARQL: peguei alguns campeonatos importantes, se pegar a base inteira fica cheio de inconsistencias.
+
+PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+
+SELECT ?nomecampeonato ?brazao ?numeroDeTimes ?PaisNome WHERE {
+   ?Campeonato a dbo:SoccerLeague.
+   ?Campeonato rdfs:label ?nomecampeonato.
+   OPTIONAL { ?Campeonato foaf:depiction ?brazao }
+   FILTER (lang(?nomecampeonato) = 'pt')
+   OPTIONAL {?Campeonato dbo:numberOfTeams ?numeroDeTimes}
+   OPTIONAL {?Campeonato dbo:country ?Pais. ?Pais dbp:commonName ?PaisNome}
+   FILTER (?nomecampeonato like 'Campeonato Italiano de Futebol' || 
+           ?nomecampeonato like 'Campeonato Brasileiro de Futebol' || 
+           ?nomecampeonato like 'La Liga' || 
+           ?nomecampeonato like 'Premier League' ||
+           ?nomecampeonato like 'Bundesliga' ||
+           ?nomecampeonato like 'Primeira Liga' )
+}
+
+1.1) Consulta JSON - não possui parâmetro
+
+http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+owl%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0D%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0D%0APREFIX+%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F%3E%0D%0APREFIX+dbpedia2%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fproperty%2F%3E%0D%0APREFIX+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2F%3E%0D%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+dbpediaO%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E%0D%0A%0D%0ASELECT+%3Fnomecampeonato+%3Fbrazao+%3FnumeroDeTimes+%3FPaisNome+WHERE+%7B%0D%0A+++%3FCampeonato+a+dbo%3ASoccerLeague.%0D%0A+++%3FCampeonato+rdfs%3Alabel+%3Fnomecampeonato.%0D%0A+++OPTIONAL+%7B+%3FCampeonato+foaf%3Adepiction+%3Fbrazao+%7D%0D%0A+++FILTER+%28lang%28%3Fnomecampeonato%29+%3D+%27pt%27%29%0D%0A+++OPTIONAL+%7B%3FCampeonato+dbo%3AnumberOfTeams+%3FnumeroDeTimes%7D%0D%0A+++OPTIONAL+%7B%3FCampeonato+dbo%3Acountry+%3FPais.+%3FPais+dbp%3AcommonName+%3FPaisNome%7D%0D%0A+++FILTER+%28%3Fnomecampeonato+like+%27Campeonato+Italiano+de+Futebol%27+%7C%7C+%0D%0A+++++++++++%3Fnomecampeonato+like+%27Campeonato+Brasileiro+de+Futebol%27+%7C%7C+%0D%0A+++++++++++%3Fnomecampeonato+like+%27La+Liga%27+%7C%7C+%0D%0A+++++++++++%3Fnomecampeonato+like+%27Premier+League%27+%7C%7C%0D%0A+++++++++++%3Fnomecampeonato+like+%27Bundesliga%27+%7C%7C%0D%0A+++++++++++%3Fnomecampeonato+like+%27Primeira+Liga%27+%29%0D%0A%7D&output=json&callback=JSON_CALLBACK
+
+2) Consulta Times de um campeonato. Na consulta abaixo a ideia é passar como parâmetro o nomedocampeonato. Isso deve ser feito no ionic mesmo, mudando o parâmetro
+<NOMECAMPEONATO> no URL JSON. Esse parâmetro é o valor do campo nomecampeonanto da consulta 1, passado para o url ao clicar no campeonato.
+
+2.1) Consulta exemplo com campeonato Bundesliga - mudar de acordo com o campeonato selecionado
+
+PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+
+SELECT ?Body ?nome WHERE {
+   ?Body a dbpediaO:SoccerClub.
+   ?Body dbpedia2:clubname ?nome.
+   ?Body dbo:league ?campeonato.
+   ?campeonato a dbo:SoccerLeague.
+   ?campeonato rdfs:label ?nomecampeonato
+   FILTER (lang(?nomecampeonato) = 'pt')
+   FILTER (?nomecampeonato like 'Bundesliga')
+}
+
+2.2) JSON: Na cosulta abaixo tem uma string <NOMECAMPEONATO> que deve ser substituída pelo campeonato selecionado
+
+http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+owl%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0D%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0D%0APREFIX+%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F%3E%0D%0APREFIX+dbpedia2%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fproperty%2F%3E%0D%0APREFIX+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2F%3E%0D%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+dbpediaO%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E%0D%0A%0D%0ASELECT+%3FBody+%3Fnome+WHERE+%7B%0D%0A+++%3FBody+a+dbpediaO%3ASoccerClub.%0D%0A+++%3FBody+dbpedia2%3Aclubname+%3Fnome.%0D%0A+++%3FBody+dbo%3Aleague+%3Fcampeonato.%0D%0A+++%3Fcampeonato+a+dbo%3ASoccerLeague.%0D%0A+++%3Fcampeonato+rdfs%3Alabel+%3Fnomecampeonato%0D%0A+++FILTER+%28lang%28%3Fnomecampeonato%29+%3D+%27pt%27%29%0D%0A+++FILTER+%28%3Fnomecampeonato+like+%27<NOMECAMPEONATO>%27%29%0D%0A%7D&output=json&callback=JSON_CALLBACK
+
+3) Consulta Detalhes de um time. Aqui são dois filtros, NOMETIME e NOMECAMPEONATO. Coloquei nomecampeonato também, pois estou buscando o time apenas pelo nome e para
+garantir que não ocorram times duplicados coloquei o campeonato também
+
+3.1) SPARQL
+
+PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+
+SELECT ?Body ?nome ?escudo ?nometecnico ?site ?descricao WHERE {
+   ?Body a dbpediaO:SoccerClub.
+   ?Body dbpedia2:clubname ?nome.
+   OPTIONAL { ?Body foaf:depiction ?escudo. }
+   OPTIONAL { ?Body dbo:manager ?tecnico. ?tecnico dbp:fullname ?nometecnico. }
+   OPTIONAL { ?Body dbo:abstract ?descricao
+   FILTER (lang(?descricao) = 'pt')}
+   OPTIONAL { ?Body dbp:website ?site }
+   ?Body dbo:league ?campeonato.
+   ?campeonato a dbo:SoccerLeague.
+   ?campeonato rdfs:label ?nomecampeonato
+   FILTER (lang(?nomecampeonato) = 'pt')
+   FILTER (?nomecampeonato like 'Primeira Liga')
+   FILTER (?nome like 'Sporting Clube de Portugal')
+}
+
+3.2) JSON. Parametros do JSON abaixo <NOMECAMPEONATO> e <NOMETIME> devem ser substituídos
+
+http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=PREFIX+owl%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0D%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0D%0APREFIX+%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F%3E%0D%0APREFIX+dbpedia2%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fproperty%2F%3E%0D%0APREFIX+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2F%3E%0D%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+dbpediaO%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E%0D%0A%0D%0ASELECT+%3FBody+%3Fnome+%3Fescudo+%3Fnometecnico+%3Fsite+%3Fdescricao+WHERE+%7B%0D%0A+++%3FBody+a+dbpediaO%3ASoccerClub.%0D%0A+++%3FBody+dbpedia2%3Aclubname+%3Fnome.%0D%0A+++OPTIONAL+%7B+%3FBody+foaf%3Adepiction+%3Fescudo.+%7D%0D%0A+++OPTIONAL+%7B+%3FBody+dbo%3Amanager+%3Ftecnico.+%3Ftecnico+dbp%3Afullname+%3Fnometecnico.+%7D%0D%0A+++OPTIONAL+%7B+%3FBody+dbo%3Aabstract+%3Fdescricao%0D%0A+++FILTER+%28lang%28%3Fdescricao%29+%3D+%27pt%27%29%7D%0D%0A+++OPTIONAL+%7B+%3FBody+dbp%3Awebsite+%3Fsite+%7D%0D%0A+++%3FBody+dbo%3Aleague+%3Fcampeonato.%0D%0A+++%3Fcampeonato+a+dbo%3ASoccerLeague.%0D%0A+++%3Fcampeonato+rdfs%3Alabel+%3Fnomecampeonato%0D%0A+++FILTER+%28lang%28%3Fnomecampeonato%29+%3D+%27pt%27%29%0D%0A+++FILTER+%28%3Fnomecampeonato+like+%27<NOMECAMPEONATO>%27%29%0D%0A+++FILTER+%28%3Fnome+like+%27<NOMETIME>%27%29%0D%0A%7D&output=json

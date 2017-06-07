@@ -1,0 +1,16 @@
+<ion-view view-title="Doenças e Sintomas">
+    <ion-content>
+	
+		<input type="text" id="contains-agentes" ng-model="termo.termobusca" placeholder="Digite informações da doença" required>
+		<button style="margin-top: 15px; " class="button button-full" id="busca-termo-submit" ng-click="submitPesquisa(termo)" >Pesquise</button>
+	
+    <ion-list>
+		    <ion-item ng-repeat="league in leagues | orderBy:'nomecampeonato.value'" class="item-thumbnail-left" ui-sref="teams({leagueName: league.nomecampeonato.value})">
+                <img ng-if="league.brazao" ng-src="{{ league.brazao.value }}" ng-attr-alt="{{ league.nomecampeonato.value }}" />
+                <h2>{{ league.nomecampeonato.value }}</h2>
+                <p ng-if="league.numeroDeTimes">Times registrados: {{ league.numeroDeTimes.value }}</p>
+                <p ng-if="league.PaisNome">País: {{ league.PaisNome.value }}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
