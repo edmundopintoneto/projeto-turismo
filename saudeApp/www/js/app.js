@@ -37,4 +37,7 @@ angular.module('saude', ['ionic'])
         controller: 'SearchResultController'
     });
 
+
+    $urlRouterProvider.otherwise('/');
+
 });

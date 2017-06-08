@@ -4,6 +4,5 @@ select distinct ?Entity ?descricao where {
     ?Entity a dbo:Disease.
 	?Entity dbo:abstract ?descricao.
 	FILTER (lang(?descricao) = 'pt')
-        FILTER (?descricao like '%febre%') 
-	
+    FILTER (?descricao like '%{name}%')
 } LIMIT 100

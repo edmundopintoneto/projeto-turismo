@@ -20,17 +20,29 @@
 
         this.execute = function(queryName, params) {
             var q = $q.defer();
-            this.getQuery(queryName).then(function(txt){
-                var params = angular.extend({}, PARAMS, {
-                    query: format(txt, params)
+            var that = this;
+            this.getQuery(queryName).then(function(txt) {
+
+                var data = angular.extend({}, PARAMS, {
+                    query: that.format(txt, params)
                 });
 
-                $http.jsonp(URL, {params: params}).then(function(result) {
+                $http.jsonp(URL, {params: data}).then(function(result) {
                     q.resolve(result.data.results);
+                }, function(err) {
+                    q.reject(err);
                 });
             });
 
             return q.promise;
+        };
+
+        this.format = function(txt, params) {
+            Object.keys(params).forEach(function(key) {
+                params[key] = params[key].replace(/\'/gi, "\\'");
+            });
+
+            return format(txt, params);
         };
 
 

@@ -1,6 +1,8 @@
 <ion-view view-title="Resultado da busca">
     <ion-content>
 
+        <div class="padding text-center" ng-show="results.length == 0">Sem resultado</div>
+
         <ion-list>
             <ion-item ng-repeat="result in results">
                 {{ result.Entity.value }}

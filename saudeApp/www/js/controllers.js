@@ -16,12 +16,14 @@
     app.controller('SearchResultController', function($scope, $stateParams, $ionicLoading, Sparql) {
         $ionicLoading.show({template: "Buscando..."});
 
-        $scope.results = [];
+        $scope.results = null;
 
-        Sparql.execute('diseases').then(function(data) {
+        Sparql.execute('diseases', {name: $stateParams.q}).then(function(data) {
             $ionicLoading.hide().then(function() {
                 $scope.results = data.bindings;
             });
+        }, function(err) {
+            $ionicLoading.show({tempalte: "Error. Recarregue"});
         });
     });
 
