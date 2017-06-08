@@ -7,5 +7,5 @@ select distinct ?Entity ?Nome  where {
 	?Entity dbo:abstract ?Descricao.
 	FILTER (lang(?Nome) = 'pt')
 	FILTER (lang(?Descricao) = 'pt')
-    FILTER (?Descricao like '%{name}%')
+    FILTER (lcase(?Descricao) like lcase('%{name}%'))
 } LIMIT 100
