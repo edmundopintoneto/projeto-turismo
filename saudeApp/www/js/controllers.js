@@ -27,4 +27,11 @@
         });
     });
 
+    /**
+     * Disease detail page
+     */
+    app.controller('DiseaseController', function($scope, disease) {
+        $scope.disease = disease.bindings[0];
+    });
+
 })(angular);

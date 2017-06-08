@@ -37,6 +37,16 @@ angular.module('saude', ['ionic'])
         controller: 'SearchResultController'
     });
 
+    $stateProvider.state('disease', {
+        url: '/disease/{uri:.*}',
+        templateUrl: 'templates/disease.html',
+        controller: 'DiseaseController',
+        resolve: {
+            disease: function(Sparql, $stateParams) {
+                return Sparql.execute('disease_detail', $stateParams);
+            }
+        }
+    });
 
     $urlRouterProvider.otherwise('/');
 
