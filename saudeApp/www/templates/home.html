@@ -1,14 +1,26 @@
 <ion-view view-title="Doenças e Sintomas">
     <ion-content>
 
+		<div class="card">
+            <div class="item item-divider">Instruções</div>
+            <div class="item item-text-wrap">
+                Para buscar por vários termos, separe-os por vírgula: <br><br>
+				Exemplos:<br><br>
+				> dor de cabeça,febre<br>
+				> malária,dengue
+            </div>
+        </div>
+		
         <form ng-submit="doSearch(q)">
             <div class="list list-inset">
                 <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" ng-model="q" placeholder="Malária, Dengue ou outra doença" required autofocus /><br />
+                    <input type="text" ng-model="q" placeholder="Busque por Doenças, Sintomas..." required autofocus /><br />
                 </label>
             </div>
         </form>
+		
+		
 
     </ion-content>
 </ion-view>

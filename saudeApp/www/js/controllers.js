@@ -17,8 +17,15 @@
         $ionicLoading.show({template: "Buscando..."});
 
         $scope.results = null;
+		
 
-        Sparql.execute('diseases', {name: $stateParams.q}).then(function(data) {
+		//splitar q por ,
+		//Para cada termo montar lcase(?Descricao) like lcase('%termo1%') && lcase(?Descricao) like lcase('%termo1%')
+		//splitar q por ,
+		//Para cada termo montar lcase(?Descricao) like lcase('%termo1%') && lcase(?Descricao) like lcase('%termo1%')
+		//$str= "''%" + $stateParams.q + "%''";
+		
+		Sparql.execute('diseases', {name: $stateParams.q}).then(function(data) {
             $ionicLoading.hide().then(function() {
                 $scope.results = data.bindings;
             });
