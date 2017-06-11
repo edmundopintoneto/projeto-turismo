@@ -23,6 +23,7 @@
         $ionicLoading.show({template: "Buscando..."});
 
         $scope.results = null;
+        $scope.lang = $stateParams.lang || DEFAULT_LANGAUGE;
 
 		Sparql.execute('diseases', $stateParams).then(function(data) {
             $ionicLoading.hide().then(function() {

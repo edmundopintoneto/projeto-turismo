@@ -13,8 +13,8 @@ where {
     ?Entity rdfs:label ?name.
     OPTIONAL { ?Entity dbo:icd10 ?linkicd10 }
     OPTIONAL { ?Entity dbo:thumbnail ?Imagem }
-	FILTER (lang(?name) = 'pt')
-	FILTER (lang(?descricao) = 'pt')
+	FILTER (lang(?name) = '{lang}')
+	FILTER (lang(?descricao) = '{lang}')
     FILTER (?Entity like '{uri}')
 }
 LIMIT 100

@@ -38,13 +38,13 @@ angular.module('saude', ['ionic'])
     });
 
     $stateProvider.state('search-result', {
-        url: '/search-result/:lang/:q',
+        url: '/search-result/{lang}/{q}',
         templateUrl: 'templates/search-result.html',
         controller: 'SearchResultController'
     });
 
     $stateProvider.state('disease', {
-        url: '/disease/{uri:.*}',
+        url: '/disease/{lang}/{uri:.*}',
         templateUrl: 'templates/disease.html',
         controller: 'DiseaseController',
         resolve: {
