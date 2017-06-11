@@ -1,12 +1,18 @@
 (function(angular) {
 
+    var DEFAULT_LANGAUGE = 'pt';
+
     var app = angular.module('saude');
 
-    app.controller('HomeController', function($scope, $state) {
-        $scope.q = "";
+    app.controller('HomeController', function($scope, $state, LANGUAGES) {
+        $scope.LANGUAGES = LANGUAGES;
+        $scope.data = {
+            lang: DEFAULT_LANGAUGE,
+            q: ""
+        };
 
-        $scope.doSearch = function(q) {
-            $state.go('search-result', {q: q});
+        $scope.doSearch = function() {
+            $state.go('search-result', $scope.data);
         };
     });
 
@@ -17,15 +23,8 @@
         $ionicLoading.show({template: "Buscando..."});
 
         $scope.results = null;
-		
 
-		//splitar q por ,
-		//Para cada termo montar lcase(?Descricao) like lcase('%termo1%') && lcase(?Descricao) like lcase('%termo1%')
-		//splitar q por ,
-		//Para cada termo montar lcase(?Descricao) like lcase('%termo1%') && lcase(?Descricao) like lcase('%termo1%')
-		//$str= "''%" + $stateParams.q + "%''";
-		
-		Sparql.execute('diseases', {name: $stateParams.q}).then(function(data) {
+		Sparql.execute('diseases', $stateParams).then(function(data) {
             $ionicLoading.hide().then(function() {
                 $scope.results = data.bindings;
             });

@@ -24,15 +24,10 @@
             this.getQuery(queryName).then(function(txt) {
 
                 var data = angular.extend({}, PARAMS, {
-					
-					//var str = txt;
-					
-					//alert(txt);
-					
                     query: that.format(txt, params)
-					//query: "PREFIX dbpediaO: <http://dbpedia.org/ontology/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n\r\nselect distinct ?Entity ?Nome  where {\r\n    ?Entity a dbo:Disease.\r\n\t?Entity rdfs:label ?Nome.\r\n\t?Entity dbo:abstract ?Descricao.\r\n\tFILTER (lang(?Nome) = 'pt')\r\n\tFILTER (lang(?Descricao) = 'pt')\r\n\tFILTER (lcase(?Descricao) like lcase('%febre%'))\r\n} LIMIT 100"
-					
                 });
+
+                console.log(data.query);
 
                 $http.jsonp(URL, {params: data}).then(function(result) {
                     q.resolve(result.data.results);

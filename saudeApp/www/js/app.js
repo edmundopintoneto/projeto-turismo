@@ -23,6 +23,12 @@ angular.module('saude', ['ionic'])
   });
 })
 
+.constant('LANGUAGES', {
+    'pt': 'Português',
+    'en': 'English',
+    'es': 'Español'
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('home', {
@@ -32,7 +38,7 @@ angular.module('saude', ['ionic'])
     });
 
     $stateProvider.state('search-result', {
-        url: '/search-result/:q',
+        url: '/search-result/:lang/:q',
         templateUrl: 'templates/search-result.html',
         controller: 'SearchResultController'
     });

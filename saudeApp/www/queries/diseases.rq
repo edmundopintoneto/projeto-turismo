@@ -5,7 +5,7 @@ select distinct ?Entity ?Nome  where {
     ?Entity a dbo:Disease.
 	?Entity rdfs:label ?Nome.
 	?Entity dbo:abstract ?Descricao.
-	FILTER (lang(?Nome) = 'pt')
-	FILTER (lang(?Descricao) = 'pt')
-	FILTER (lcase(?Descricao) like lcase('%{name}%'))
+	FILTER (lang(?Nome) = '{lang}')
+	FILTER (lang(?Descricao) = '{lang}')
+	FILTER (lcase(?Descricao) like lcase('%{q}%'))
 } LIMIT 100
