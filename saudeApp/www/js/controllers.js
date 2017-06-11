@@ -25,7 +25,17 @@
         $scope.results = null;
         $scope.lang = $stateParams.lang || DEFAULT_LANGAUGE;
 
-		Sparql.execute('diseases', $stateParams).then(function(data) {
+
+        var params = {lang: $stateParams.lang};
+        params.q = {
+            txt: "lcase(?Descricao) like lcase('%{0}%')",
+            values: [],
+            joiner: ' || '
+        };
+
+        params.q.values = $stateParams.q.split(',').map(function(item){ return item.trim(); });
+
+		Sparql.execute('diseases', params).then(function(data) {
             $ionicLoading.hide().then(function() {
                 $scope.results = data.bindings;
             });

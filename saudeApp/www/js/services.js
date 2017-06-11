@@ -41,7 +41,15 @@
 
         this.format = function(txt, params) {
             Object.keys(params).forEach(function(key) {
-                params[key] = params[key].replace(/\'/gi, "\\'");
+                if (angular.isObject(params[key])) {
+                    // {txt: string, values: array, joiner: string}
+                    var txt = params[key].txt;
+                    params[key] = params[key].values.map(function(value) {
+                        return format(txt, value.replace(/\'/gi, "\\'"));
+                    }).join(params[key].joiner);
+                } else {
+                    params[key] = params[key].replace(/\'/gi, "\\'");
+                }
             });
 
             return format(txt, params);
