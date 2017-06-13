@@ -28,11 +28,11 @@
 
         var params = {lang: $stateParams.lang};
         params.q = {
-            txt: "lcase(?Descricao) like lcase('%{0}%')",
+            txt: "lcase(str(?qualquervalor)) like lcase('%{0}%')",
             values: [],
             joiner: ' && '
-        };
-
+        };			
+		
         params.q.values = $stateParams.q.split(',').map(function(item){ return item.trim(); });
 
 		Sparql.execute('diseases', params).then(function(data) {
