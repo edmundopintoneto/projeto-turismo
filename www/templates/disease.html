@@ -1,0 +1,20 @@
+<ion-view view-title="{{ disease.name.value }}">
+    <ion-content class="padding">
+
+        <div ng-if="disease.Imagem.value" style="text-align: center">
+            <img ng-src="{{ disease.Imagem.value }}" ng-attr-alt="{{ disease.nome.value }}" style="max-height: 200px; max-width: 100%; border-radius: 4px;" />
+        </div>
+
+        <div class="card">
+            <div class="item item-divider">ICD 10</div>
+            <div class="item item-text-wrap">
+                <a ng-href="{{ disease.linkicd10.value }}" target="_blank">{{ disease.linkicd10.value }}</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">{{ disease.descricao.value }}</div>
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,11 @@
+PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?Entity ?Nome  where {
+?Entity a dbo:Disease.
+    ?Entity rdfs:label ?Nome.
+    ?Entity dbo:abstract ?Descricao.
+	FILTER (lang(?Nome) = '{lang}')
+	FILTER (lang(?Descricao) = '{lang}')
+	FILTER ({q})
+} LIMIT 100

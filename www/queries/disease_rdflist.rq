@@ -1,0 +1,13 @@
+PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+
+select distinct ?Entity
+
+?a
+?b
+
+where {
+    ?Entity a dbo:Disease.
+    ?Entity ?a ?b.
+    FILTER (?Entity like '{uri}')
+}
+LIMIT 100
