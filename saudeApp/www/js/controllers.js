@@ -28,7 +28,7 @@
 
         var params = {lang: $stateParams.lang};
         params.q = {
-            txt: "lcase(str(?qualquervalor)) like lcase('%{0}%')",
+            txt: "lcase(str(?Descricao)) like lcase('%{0}%')",
             values: [],
             joiner: ' && '
         };			
