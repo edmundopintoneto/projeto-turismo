@@ -1,6 +1,6 @@
 (function(angular) {
 
-    var DEFAULT_LANGAUGE = 'pt';
+    var DEFAULT_LANGAUGE = 'Nome';
 
     var app = angular.module('saude');
 
@@ -28,7 +28,8 @@
 
         var params = {lang: $stateParams.lang};
         params.q = {
-            txt: "lcase(str(?Descricao)) like lcase('%{0}%')",
+           // txt: "(lcase(str(?countryname))|lcase(str(?cityname))|lcase(str(?Nome)) like lcase('%{0}%') ||  like lcase('%{0}%') || lcase(str(?Nome)) like lcase('%{0}%'))",
+			txt: "lcase(str(?" + $scope.lang + ")) like lcase('%{0}%')",
             values: [],
             joiner: ' && '
         };			

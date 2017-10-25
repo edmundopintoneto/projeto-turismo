@@ -24,9 +24,9 @@ angular.module('saude', ['ionic'])
 })
 
 .constant('LANGUAGES', {
-    'pt': 'Português',
-    'en': 'English',
-    'es': 'Español'
+    'Nome': 'Nome da Atração Turística',
+    'countryname': 'País',
+    'cityname': 'Cidade'
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

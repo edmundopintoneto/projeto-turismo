@@ -1,4 +1,4 @@
-<ion-view view-title="{{ disease.name.value }}">
+<ion-view view-title="{{ disease.Nome.value }}">
     <ion-content class="padding">
 
         <div ng-if="disease.Imagem.value" style="text-align: center">
@@ -6,14 +6,18 @@
         </div>
 
         <div class="card">
-            <div class="item item-divider">ICD 10</div>
+            <div class="item item-divider">Visualizar atração no mapa:</div>
             <div class="item item-text-wrap">
-                <a ng-href="{{ disease.linkicd10.value }}" target="_blank">{{ disease.linkicd10.value }}</a>
+                <a ng-href="{{ disease.linkgooglemaps.value }}" target="_blank">{{ disease.linkgooglemaps.value }}</a>
             </div>
         </div>
 
         <div class="card">
-            <div class="item item-text-wrap">{{ disease.descricao.value }}</div>
+            <div class="item item-text-wrap">O que é? {{ disease.typeName.value }}</div>
+			<div class="item item-text-wrap">Cidade: {{ disease.cityname.value }}</div>
+			<div class="item item-text-wrap">País: {{ disease.countryname.value }}</div>
+			<div class="item item-text-wrap">Latitude: {{ disease.lat.value }}</div>
+			<div class="item item-text-wrap">Longitude: {{ disease.long.value }}</div>		
         </div>
 
     </ion-content>

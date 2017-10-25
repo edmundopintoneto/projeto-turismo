@@ -1,11 +1,63 @@
-PREFIX dbpediaO: <http://dbpedia.org/ontology/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?Entity ?Nome  where {
-?Entity a dbo:Disease.
-    ?Entity rdfs:label ?Nome.
-    ?Entity dbo:abstract ?Descricao.
-	FILTER (lang(?Nome) = '{lang}')
-	FILTER (lang(?Descricao) = '{lang}')
-	FILTER ({q})
-} LIMIT 100
+select ?Entity (min(?Nome) as ?Nome) where {
+
+?city dbo:country ?country.
+?country rdfs:label ?countryname.
+
+?Entity dbo:location ?city.
+?city rdfs:label ?cityname. 
+
+?Entity rdfs:label ?Nome
+
+optional
+{
+?Entity a ?type.
+VALUES ?type {dbo:Museum}
+BIND( "Museum" as ?typeName )
+}
+optional
+{
+?Entity a ?type.
+VALUES ?type {dbo:Pyramid}
+BIND( "Pyramid" as ?typeName )
+}
+
+optional
+{
+?Entity a ?type.
+VALUES ?type {yago:Skyscraper104233124}
+BIND( "Skyscraper" as ?typeName )
+}
+
+optional
+{
+?Entity a ?type.
+VALUES ?type {dbo:Park}
+BIND( "Park" as ?typeName )
+}
+
+optional
+{
+?Entity a ?type.
+VALUES ?type {yago:Church103028079}
+BIND( "Church" as ?typeName )
+}
+
+optional
+{
+?Entity geo:long ?long.
+?Entity geo:lat ?lat
+}
+
+
+{
+?Entity a dbo:Place
+}
+
+filter (BOUND (?type))
+filter ({q})
+
+} GROUP BY ?Entity
+limit 100

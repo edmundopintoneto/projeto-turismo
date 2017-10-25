@@ -1,13 +1,13 @@
 <ion-view view-title="Resultado da busca">
-    <ion-content>
-
+    <ion-content overflow-scroll=”true”>
+		<ion-scroll direction="y">
         <div class="padding text-center" ng-show="results.length == 0">Sem resultado</div>
 
         <ion-list>
             <ion-item ng-repeat="result in results | orderBy:'Nome.value'" ui-sref="disease({lang: lang, uri: result.Entity.value})">
-                {{ result.Nome.value }}
+                {{ result.Nome.value }} 
             </ion-item>
         </ion-list>
-
+ </ion-scroll>
     </ion-content>
 </ion-view>
